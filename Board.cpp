@@ -1,7 +1,7 @@
 #import <iostream>
 #import <string>
 #import <math.h>
-#include "Cell.cpp"
+#include "Cell.cpp" // when ready, use Cell.h
 
 using namespace std;
 
@@ -11,8 +11,8 @@ private:
     int difficulty;
     int gridSize;
     int score;
-    Cell solution[9][9];
-    Cell gameBoard[9][9];
+    Cell solution[][];
+    Cell gameBoard[][];
     int colRoots( int col );
     bool enforceRules( int row, int col, int input );
     bool checkBox( int rootRow, int rootCol, int row, int col, int input );
@@ -29,10 +29,12 @@ public:
 Board::Board( int level ) {
     difficulty = level;
     gridSize = 9;
-};
+    solution = new Cell[gridSize][gridSize];
+    gameBoard = new Cell[gridSize][gridSize];
+}
 
 Board::~Board( ) {
-    // delete arrays?
+    // delete stuff?
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -44,6 +46,7 @@ void Board::newBoard( ) {
     int fillPercent;
     float randomizer;
     int randomInput;
+    bool failedRules = true;
 
     switch ( difficulty ) {
         case 0:
@@ -55,7 +58,7 @@ void Board::newBoard( ) {
         case 2:
             fillPercent = 20;   // hard
             break;
-        // case 3:                              // case 3 will require a change in code for enforceRules() & checkBox()
+        // case 3:                 // case 3 will require a change in code for enforceRules() & checkBox() !!!!!!
         //     fillPercent = 20;   // evil
         //     gridSize = 16;
         //     break;
@@ -63,15 +66,28 @@ void Board::newBoard( ) {
             break;
     }
 
+    // forloop: loops through every cell to create a solution and gameBoard.
     for ( int row = 0; row < gridSize; ++row ) {
         for ( int col = 0; col < gridSize; ++col ) {
             randomizer = ( float ) rand( ) / ( RAND_MAX / 1 );
             randomInput = floor( rand( ) / ( RAND_MAX / 10 ) );
-            if ( randomizer <= fillPercent / 100 ) {
-                solution[col][row].lockCell( );
-                gameBoard[col][row] = solution[col][row];
+
+            // if: rules don't fail, continue to next if, else randomize.
+            // if: randomly chose as locked, lockCell and setInput for
+            //      gameBoard and solution. Else, only set value for
+            //      solution but don't lock
+            while ( failedRules ) {
                 if ( enforceRules( row, col, randomInput ) ) {
-                    solution[col][row].setInput( randomInput );
+                    failedRules = false;
+                    if ( randomizer <= fillPercent / 100 ) {
+                        solution[col][row].lockCell( );
+                        solution[col][row].setInput( randomInput );
+                        gameBoard[col][row] = solution[col][row];               // need to test: will this work? else manually lock and set for gameBoard
+                    } else {
+                        solution[col][row].setInput( randomInput );
+                    }   
+                } else {
+                    randomizer = ( float ) rand( ) / ( RAND_MAX / 1 );
                 }
             }
         }
@@ -79,7 +95,7 @@ void Board::newBoard( ) {
 }
 
 void Board::endGame( ) {
-    // calculate scores, and store
+    // calculate scores, and store away score
 }
 
 Cell Board::getBoard( ) {
@@ -162,9 +178,9 @@ int Board::colRoots( int col ) {
 bool Board::checkBox( int rootRow, int rootCol, int row, int col, int input ) {
     for ( int cols = rootRow; cols < rootRow + 3; ++cols ) {
         for ( int rows = rootCol; rows < rootCol + 3; ++cols ) {
-            if ( cols != col &&
-                 rows != row &&
-                 gameBoard[cols][rows].getInput( ) == input ) {
+            if ( cols != col
+                 && rows != row
+                 && gameBoard[cols][rows].getInput( ) == input ) {
                 return false;
             }
         }
