@@ -1,6 +1,6 @@
-#import <iostream>
-#import <string>
-#import <math.h>
+#include <iostream>
+#include <string>
+#include <math.h>
 #include "Cell.cpp" // when ready, use Cell.h
 
 using namespace std;
