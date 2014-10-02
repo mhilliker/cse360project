@@ -1,7 +1,7 @@
-#import <iostream>
-#import <vector>
-#import <string>
-#import <math.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
 #include "Cell.h"
 
 using namespace std;
