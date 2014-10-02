@@ -1,40 +1,10 @@
-#import <iostream>
-#import <string>
-#import <math.h>
-#include "Cell.cpp" // when ready, use Cell.h
-
-using namespace std;
-
-class Board {
-private:
-    int startTime;
-    int difficulty;
-    int gridSize;
-    int score;
-    Cell solution[][];
-    Cell gameBoard[][];
-    int colRoots( int col );
-    bool enforceRules( int row, int col, int input );
-    bool checkBox( int rootRow, int rootCol, int row, int col, int input );
-
-public:
-    Board( int level );
-    ~Board( );
-    void newBoard( );
-    void endGame( );
-    Cell getSolution( );
-    Cell getBoard( );
-};
-
 Board::Board( int level ) {
     difficulty = level;
     gridSize = 9;
-    solution = new Cell[gridSize][gridSize];
-    gameBoard = new Cell[gridSize][gridSize];
 }
 
 Board::~Board( ) {
-    // delete stuff?
+    // delete stuff
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -98,11 +68,11 @@ void Board::endGame( ) {
     // calculate scores, and store away score
 }
 
-Cell Board::getBoard( ) {
+vector< vector<Cell> > Board::getBoard( ) {
     return gameBoard;
 }
 
-Cell Board::getSolution( ) {
+vector< vector<Cell> > Board::getSolution( ) {
     return solution;
 }
 
