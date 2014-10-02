@@ -42,6 +42,7 @@ void Board::newBoard( ) {
             randomizer = ( float ) rand( ) / ( RAND_MAX / 1 );
             randomInput = floor( rand( ) / ( RAND_MAX / 10 ) );
 
+            // while: if the input failed the rules, redo the input.
             // if: rules don't fail, continue to next if, else randomize.
             // if: randomly chose as locked, lockCell and setInput for
             //      gameBoard and solution. Else, only set value for
@@ -57,7 +58,7 @@ void Board::newBoard( ) {
                         solution[col][row].setInput( randomInput );
                     }   
                 } else {
-                    randomizer = ( float ) rand( ) / ( RAND_MAX / 1 );
+                    randomInput = floor( rand( ) / ( RAND_MAX / 10 ) );
                 }
             }
         }
