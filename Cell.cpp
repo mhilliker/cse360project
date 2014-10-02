@@ -1,3 +1,5 @@
+#include "Cell.h"
+
 Cell::Cell( ) {
     // default input = 0 ?
     locked = false;

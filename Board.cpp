@@ -1,3 +1,5 @@
+#include "Board.h"
+
 Board::Board( int level ) {
     difficulty = level;
     gridSize = 9;
@@ -9,7 +11,7 @@ Board::~Board( ) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 *
-*   newBoard() reinitializes board, and replaces current array
+*   newBoard() reinitializes board, and replaces current vector
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void Board::newBoard( ) {
@@ -53,10 +55,10 @@ void Board::newBoard( ) {
                     if ( randomizer <= fillPercent / 100 ) {
                         solution[col][row].lockCell( );
                         solution[col][row].setInput( randomInput );
-                        gameBoard[col][row] = solution[col][row];               // need to test: will this work? else manually lock and set for gameBoard
+                        gameBoard[col][row].setInput( randomInput );
                     } else {
                         solution[col][row].setInput( randomInput );
-                    }   
+                    }
                 } else {
                     randomInput = floor( rand( ) / ( RAND_MAX / 10 ) );
                 }
