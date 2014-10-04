@@ -160,3 +160,13 @@ bool Board::checkBox( int rootRow, int rootCol, int row, int col, int input ) {
     }
     return true;
 }
+
+// This is only for testing purposes, printing to the console.
+void Board::printSolution( ) {
+    for (int y = 0; y < gridSize; ++y) {
+        for (int x = 0; x < gridSize; ++x) {
+            cout << solution[x][y].getInput() << " ";
+        }
+        cout << endl;
+    }
+}
