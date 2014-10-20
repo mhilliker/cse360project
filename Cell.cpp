@@ -1,22 +1,22 @@
 #include "Cell.h"
 
-Cell::Cell( ) {
-    // default input = 0 ?
-    locked = false;
+Cell::Cell() {
+	input = NULL;
+	locked = false;
 }
 
-bool Cell::getLocked( ) {
-    return locked;
+bool Cell::getLocked() {
+	return locked;
 }
 
-void Cell::lockCell( ) {
-    locked = true;
+void Cell::lockCell() {
+	locked = true;
 }
 
-int Cell::getInput( ) {
-    return input;
+int Cell::getInput() {
+	return input;
 }
 
-void Cell::setInput( int newInput ) {
-    input = newInput;
+void Cell::setInput(int newInput) {
+	input = newInput;
 }
