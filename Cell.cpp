@@ -1,35 +1,56 @@
-#include <iostream>
+#include "Cell.h"
 
-class Cell {
-private:
-    int input;
-    bool locked;
-
-public:
-    Cell( );
-    bool getLocked( );
-    void lockCell( );
-    int getInput( );
-    void setInput( int newInput );
-};
-
-Cell::Cell( ) {
-    // default input = 0 ?
-    locked = false;
+Cell::Cell() {
+	input = NULL;
+	locked = false;
+	badInput = false;
 }
 
-bool Cell::getLocked( ) {
-    return locked;
+bool Cell::getLocked() {
+	return locked;
 }
 
-void Cell::lockCell( ) {
-    locked = true;
+void Cell::lockCell() {
+	locked = true;
 }
 
-int Cell::getInput( ) {
-    return input;
+int Cell::getInput() {
+	return input;
 }
 
-void Cell::setInput( int newInput ) {
-    input = newInput;
+void Cell::setInput(int newInput) {
+	input = newInput;
+}
+
+void Cell::resetCell() {
+	input = NULL;
+	locked = false;
+	badInput = false;
+	validRow = true;
+	validCol = true;
+	validBox = true;
+}
+
+void Cell::setRowValid(bool validR) {
+	validRow = validR;
+}
+
+void Cell::setColValid(bool validC) {
+	validCol = validC;
+}
+
+void Cell::setBoxValid(bool validB) {
+	validBox = validB;
+}
+
+bool Cell::getRowValid() {
+	return validRow;
+}
+
+bool Cell::getColValid() {
+	return validCol;
+}
+
+bool Cell::getBoxValid() {
+	return validBox;
 }
