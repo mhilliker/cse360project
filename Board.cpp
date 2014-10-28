@@ -87,13 +87,16 @@ void Board::newBoard() {
 							solution[col][row].lockCell();
 							solution[col][row].setInput(randomInput);
 							gameBoard[col][row].setInput(randomInput);
-						} else {
+						}
+						else {
 							solution[col][row].setInput(randomInput);
 						} // end if-else
-					} else {
+					}
+					else {
 						solution[col][row].attempted.push_back(randomInput);
 					} // end if-else
-				} else if (solution[col][row].attempted.size() >= 9) {
+				}
+				else if (solution[col][row].attempted.size() >= 9) {
 					solution[col][row].attempted.clear();
 
 					// if: column is at minimum, jump back a row, and set column to last index.
@@ -101,7 +104,8 @@ void Board::newBoard() {
 					if (col == 0) {
 						row--;
 						col = 8;
-					} else {
+					}
+					else {
 						col--;
 					} // end if-else
 					solution[col][row].attempted.push_back(solution[col][row].getInput());
@@ -153,14 +157,16 @@ bool Board::enforceRules(int row, int col, int input, bool init) {
 		if (c != col) {
 			if (init && checkInput == input) {
 				return false;
-			} else if (!init) {
+			}
+			else if (!init) {
 				if (checkInput == input) {
 					gameBoard[col][row].setRowValid(false);
 					gameBoard[c][row].setRowValid(false);
 					validRow = false;
-				} else if (gameBoard[c][row].getRowValid() == false) {
-					if (checkInput == gameBoard[col][row].getInput()) {
-
+				}
+				else if (gameBoard[c][row].getRowValid() == false) {
+					if (gameBoard[col][row].getInput() != 0 && checkInput == gameBoard[col][row].getInput()) {
+						gameBoard[c][row].setRowValid(true);
 					}
 				}
 			}
@@ -176,12 +182,14 @@ bool Board::enforceRules(int row, int col, int input, bool init) {
 		//		else if cell is already bad input not equal to, 
 		if (init && r != row && checkInput == input) {
 			return false;
-		} else if (!init) {
+		}
+		else if (!init) {
 			if (r != row && checkInput == input) {
 				gameBoard[col][row].setColValid(false);
 				gameBoard[col][r].setColValid(false);
 				validCol = false;
-			} else if (gameBoard[col][r].getColValid() == false) {
+			}
+			else if (gameBoard[col][r].getColValid() == false) {
 				// if: bad input because previous input ( == previous)...
 				//		else do nothing???
 				if (checkInput == gameBoard[col][row].getInput()) {
@@ -197,11 +205,13 @@ bool Board::enforceRules(int row, int col, int input, bool init) {
 		rootRow = 0;
 		rootCol = colRoots(col);
 		return checkBox(rootRow, rootCol, row, col, input, init);
-	} else if (row >= 3 && row < 6) {
+	}
+	else if (row >= 3 && row < 6) {
 		rootRow = 3;
 		rootCol = colRoots(col);
 		return checkBox(rootRow, rootCol, row, col, input, init);
-	} else {
+	}
+	else {
 		rootRow = 6;
 		rootCol = colRoots(col);
 		return checkBox(rootRow, rootCol, row, col, input, init);
@@ -231,11 +241,11 @@ int Board::colRoots(int col) {
 bool Board::checkBox(int rootRow, int rootCol, int row, int col, int input, bool init) {
 	int checkInput;
 	for (int rows = rootRow; rows < rootRow + 3; rows++)
-		for (int cols = rootCol; cols < rootCol + 3; cols++)
-			if (cols != col && rows != row) {
-				checkInput = (init) ? solution[cols][rows].getInput() : gameBoard[cols][rows].getInput();
-				if (checkInput == input) return false;
-			}
+	for (int cols = rootCol; cols < rootCol + 3; cols++)
+	if (cols != col && rows != row) {
+		checkInput = (init) ? solution[cols][rows].getInput() : gameBoard[cols][rows].getInput();
+		if (checkInput == input) return false;
+	}
 	return true;
 }
 
