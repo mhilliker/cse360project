@@ -15,9 +15,9 @@ private:
 	int score;
 	vector< vector< Cell > > solution;
 	vector< vector< Cell > > gameBoard;
-	int colRoots(int col);
-	bool enforceRules(int row, int col, int input, bool init);
-	bool checkBox(int rootRow, int rootCol, int row, int col, int input, bool init);
+	int colRoots(int);
+	bool enforceRules(int, int, int, bool);
+	bool checkBox(int, int, int, int, int, bool);
 
 public:
 	Board(int level);
