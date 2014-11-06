@@ -3,7 +3,9 @@
 Cell::Cell() {
 	input = NULL;
 	locked = false;
-	badInput = false;
+	validRow = true;
+	validCol = true;
+	validBox = true;
 }
 
 bool Cell::getLocked() {
@@ -25,7 +27,6 @@ void Cell::setInput(int newInput) {
 void Cell::resetCell() {
 	input = NULL;
 	locked = false;
-	badInput = false;
 	validRow = true;
 	validCol = true;
 	validBox = true;
@@ -53,4 +54,8 @@ bool Cell::getColValid() {
 
 bool Cell::getBoxValid() {
 	return validBox;
+}
+
+bool Cell::isValid() {
+	return (validRow && validCol && validBox) ? true : false;
 }

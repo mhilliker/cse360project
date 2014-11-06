@@ -7,17 +7,19 @@ class Cell {
 private:
 	int input;
 	bool locked;
-	bool badInput;
 	bool validRow;
 	bool validCol;
 	bool validBox;
+	vector< int > guesses;
+	vector< int > unwanted;
 
 public:
 	Cell();
+	vector< int > attempted;
 	bool getLocked();
 	void lockCell();
 	int getInput();
-	void setInput(int);
+	void setInput(int newInput);
 	void resetCell();
 	void setRowValid(bool);
 	void setColValid(bool);
@@ -25,5 +27,5 @@ public:
 	bool getRowValid();
 	bool getColValid();
 	bool getBoxValid();
-	vector<int> attempted;
+	bool isValid();
 };

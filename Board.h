@@ -15,16 +15,18 @@ private:
 	int score;
 	vector< vector< Cell > > solution;
 	vector< vector< Cell > > gameBoard;
-	int colRoots(int);
-	bool enforceRules(int, int, int, bool);
-	bool checkBox(int, int, int, int, int, bool);
+	bool enforceRules(int row, int col, int newInput);
+	void check(int col, int row);
 
 public:
 	Board(int level);
-	~Board();
+	//~Board();
 	void newBoard();
 	void endGame();
-	void printSolution();
+	void newInput(int row, int col, int newInput);
 	vector< vector< Cell > > getSolution();
 	vector< vector< Cell > > getBoard();
+	void printSolution(); // for testing
+	void playBoardRndm(); // for testing
+	void playBoardReal(); // for testing
 };
