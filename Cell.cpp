@@ -16,11 +16,11 @@ void Cell::lockCell() {
 	locked = true;
 }
 
-int Cell::getInput() {
+char Cell::getInput() {
 	return input;
 }
 
-void Cell::setInput(int newInput) {
+void Cell::setInput(char newInput) {
 	input = newInput;
 }
 
@@ -42,18 +42,6 @@ void Cell::setColValid(bool validC) {
 
 void Cell::setBoxValid(bool validB) {
 	validBox = validB;
-}
-
-bool Cell::getRowValid() {
-	return validRow;
-}
-
-bool Cell::getColValid() {
-	return validCol;
-}
-
-bool Cell::getBoxValid() {
-	return validBox;
 }
 
 bool Cell::isValid() {
