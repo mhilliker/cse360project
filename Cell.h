@@ -10,6 +10,7 @@ private:
 	bool validRow;
 	bool validCol;
 	bool validBox;
+	bool aiMove;
 
 public:
 	Cell();
@@ -20,6 +21,7 @@ public:
 	void lockCell();
 	char getInput();
 	void setInput(char newInput);
+	bool getAIMove();
 	void resetCell();
 	void setRowValid(bool);
 	void setColValid(bool);

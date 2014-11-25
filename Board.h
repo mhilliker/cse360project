@@ -17,15 +17,15 @@ private:
 	int score;
 	vector< vector< Cell > > solution;
 	vector< vector< Cell > > gameBoard;
-	bool enforceRules(int row, int col, char newInput);
+	bool enforceRules(int row, int col, char newInput, bool aiCheck);
 	void check(int col, int row);
 
 public:
-	Board(int level, bool ai);
-	//~Board();
+	Board(int level, bool ai, bool test);
+	~Board();
 	void newBoard();
 	void endGame();
-	void newInput(int row, int col, char newInput);
+	bool newInput(int row, int col, char newInput);
 	vector< vector< Cell > > getSolution();
 	vector< vector< Cell > > getBoard();
 	void oNote(int col, int row, char note, bool add);

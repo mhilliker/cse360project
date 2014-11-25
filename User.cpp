@@ -1,59 +1,90 @@
-#include <iostream>
-#include <string>
-#include <math.h>
-#include <fstream>
-#include <iomanip>
+#include "User.h"
+
 using namespace std;
-class User
-{
-public:
-	User next;
-	String userName;
-	String passWord;
-	int highScore;
-	String getUsername();
-	String getPassword();
-	int getHighScore();
-	void setUsername(String name);
-	void setPassword(String password);
-	void setHighScore(int score);
-	User(String name, String password, int score);
-};
-User(String name, String password, int score)
-{
-	name = "guest";
-	password = "123456789";
-	score = 0;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	Constructor takes in parameters for username and password. Other
+*	variables are set to default values.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+User::User(string name, string pw) {
+	nextUser = NULL;
+	userName = name;
+	password = pw;
+	highScore = 0;
+	savedGame = NULL;
 }
-String getUsername()
-{
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	Destructor
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+User::~User() {
+}
+
+User * User::next() {
+	return nextUser;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	getUserName() : returns the userName.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+string User::getUserName() {
 	return userName;
 }
 
-String getPassword()
-{
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	getPassword() : returns the password.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+string User::getPassword() {
 	return password;
 }
 
-int getHighScore()
-{
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	getHighScore() : returns the highscore.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+int User::getHighScore() {
 	return highScore;
 }
 
-void setUsername(String name)
-{
-	userName = name;
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	setHighScore() : sets the highscore equal to the integer parameter 'hs'.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+void User::setHighScore(int hs) {
+	highScore = hs;
 }
 
-void setPassword(String password)
-{
-	passWord = password;
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	setNext() : sets the next user in the linked list equal to the User
+*	pointer parameter 'newUser'.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+void User::setNext(User * newUser) {
+	nextUser = newUser;
 }
 
-void setHighScore(int score)
-{
-	highScore = score;
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*	saveGame() : sets the savedGame equal to current gameboard to be stored.
+*	This should be called periodically, together with saveData() in
+*	AccountManager.
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+void User::saveGame(Board * game) {
+	savedGame = game;
 }
 
-
-
+void User::printUser() {
+	cout << userName << " " << highScore << " ";
+}
