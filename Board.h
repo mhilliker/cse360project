@@ -1,3 +1,6 @@
+#ifndef BOARD_H
+#define BOARD_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -29,11 +32,13 @@ public:
 	vector< vector< Cell > > getSolution();
 	vector< vector< Cell > > getBoard();
 	void oNote(int col, int row, char note, bool add);
-	vector< char > getoNote(int col, int row);
+	bool* getoNote(int col, int row);
 	void xNote(int col, int row, char note, bool add);
-	vector< char > getxNote(int col, int row);
+	bool* getxNote(int col, int row);
 	void playAI();
-	void printSolution(); // for testing
-	void playBoardRndm(); // for testing
-	void playBoardReal(); // for testing
+	//void printSolution(); // for testing
+	//void playBoardRndm(); // for testing
+	//void playBoardReal(); // for testing
 };
+
+#endif
