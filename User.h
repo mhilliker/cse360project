@@ -1,5 +1,8 @@
+#ifndef USER_H
+#define USER_H
+
 #include <iostream>
-#include "Board.h"
+//#include "Board.h"
 
 using namespace std;
 
@@ -9,7 +12,7 @@ private:
 	string userName;
 	string password;
 	int highScore;
-	Board * savedGame;
+	//Board * savedGame;
 
 public:
 	User(string name, string pw);
@@ -20,7 +23,7 @@ public:
 	int getHighScore();
 	void setHighScore(int hs);
 	void setNext(User * newUser);
-	void saveGame(Board * game);
+	//void saveGame(Board * game);
 	void printUser();
 
 };
