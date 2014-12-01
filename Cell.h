@@ -1,3 +1,6 @@
+#ifndef CELL_H
+#define CELL_H
+
 #include <iostream>
 #include <vector>
 
@@ -15,8 +18,8 @@ private:
 public:
 	Cell();
 	vector< char > attempted;
-	vector< char > oNotes; // list of numbers user decides are possible to use in cell
-	vector< char > xNotes; // list of numbers user decides cannot be used in cell
+	bool oNotes[9]; // list of numbers user decides are possible to use in cell
+	bool xNotes[9]; // list of numbers user decides cannot be used in cell
 	bool getLocked();
 	void lockCell();
 	char getInput();
@@ -28,3 +31,5 @@ public:
 	void setBoxValid(bool);
 	bool isValid();
 };
+
+#endif
