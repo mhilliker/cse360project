@@ -6,11 +6,12 @@
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 Cell::Cell() {
-	input = NULL;
+	input = '0';
 	locked = false;
 	validRow = true;
 	validCol = true;
 	validBox = true;
+
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -64,7 +65,7 @@ bool Cell::getAIMove() {
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void Cell::resetCell() {
-	input = NULL;
+	input = '0';
 	locked = false;
 	validRow = true;
 	validCol = true;
