@@ -13,7 +13,7 @@ User::User(string name, string pw) {
 	userName = name;
 	password = pw;
 	highScore = 0;
-	savedGame = NULL;
+	//savedGame = NULL;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -81,10 +81,11 @@ void User::setNext(User * newUser) {
 *	AccountManager.
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*
 void User::saveGame(Board * game) {
 	savedGame = game;
-}
+}*/
 
 void User::printUser() {
-	cout << userName << " " << highScore << " ";
+	//cout << userName << " " << highScore << " ";
 }
