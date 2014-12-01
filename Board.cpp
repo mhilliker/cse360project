@@ -309,15 +309,11 @@ void Board::check(int col, int row) {
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void Board::oNote(int col, int row, char note, bool add) {
 	Cell * cell = &gameBoard[col][row];
-
+	int x = note - '0';
 	if (add) {
-		cell->oNotes.push_back(note);
+		cell->oNotes[x]=true;
 	} else {
-		for (int i = 0; i < cell->oNotes.size(); i++)
-		if (cell->oNotes[i] == note) {
-			cell->oNotes[i] = cell->oNotes.back();
-			cell->oNotes.pop_back();
-		}
+		cell->oNotes[x]=false;
 	}
 }
 
@@ -327,7 +323,7 @@ void Board::oNote(int col, int row, char note, bool add) {
 *	for the cell.
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-vector< char > Board::getoNote(int col, int row) {
+bool* Board::getoNote(int col, int row) {
 	return gameBoard[col][row].oNotes;
 }
 
@@ -342,16 +338,10 @@ vector< char > Board::getoNote(int col, int row) {
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void Board::xNote(int col, int row, char note, bool add) {
 	Cell * cell = &gameBoard[col][row];
-
-	if (add) {
-		cell->xNotes.push_back(note);
-	} else {
-		for (int i = 0; i < cell->xNotes.size(); i++)
-		if (cell->xNotes[i] == note) {
-			cell->xNotes[i] = cell->xNotes.back();
-			cell->xNotes.pop_back();
-		}
-	}
+	int x = note - '0';
+	if (add)
+		cell->xNotes[x]=true;
+	
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -360,7 +350,7 @@ void Board::xNote(int col, int row, char note, bool add) {
 *	use or else it violates the sudoku rules.
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-vector< char > Board::getxNote(int col, int row) {
+bool* Board::getxNote(int col, int row) {
 	return gameBoard[col][row].xNotes;
 }
 
