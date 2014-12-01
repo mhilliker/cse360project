@@ -49,12 +49,13 @@ void AccountManager::logout() {
 *	will be added in alphabetical order.
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-bool AccountManager::newAccount(string user, string pw) {
+bool AccountManager::newAccount(string user, string pw,int score) {
 
 	// if: username exists in the list, return false.
 	if (search(user) != NULL) return false;
 
 	User * newAccount = new User(user, pw);
+	newAccount->setHighScore(score);
 	User * ptr = userAccounts;
 
 	// if: username comes after tail, point tail next to new user, and tail
@@ -89,8 +90,26 @@ bool AccountManager::newAccount(string user, string pw) {
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 bool AccountManager::loadData() {
-	string fileName = "sudoku_save.dat"; // file type? .txt? .bin? ...?
+	string fileName = "sudoku_save.txt"; // file type? .txt? .bin? ...?
 	// read userAccounts from file
+	ifstream file;
+	file.open(fileName);
+	string line, username, password;
+	int temp1=0, temp2=0, score;
+	if(!file.is_open()) return false;
+	else{
+		while(getline(file,line)){
+			//parse user data
+			temp1 = line.find("/");
+			temp2 = line.find("/",temp1);
+			username = line.substr(0,temp1);
+			password = line.substr(temp1+1,temp2);
+			score    = atoi(line.substr(temp2+1).c_str());
+			//add account to linked list
+			this->newAccount(username,password,score);
+		}
+	}
+	file.close();
 	return true;
 }
 
@@ -100,8 +119,18 @@ bool AccountManager::loadData() {
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 bool AccountManager::saveData() {
-	string fileName = "sudoku_save.dat"; //  "   "   "   "
+	string fileName = "sudoku_save.txt"; //  "   "   "   "
 	// write userAccounts to a file
+	ofstream file;
+	file.open(fileName);
+	User * ptr = userAccounts;
+	while (ptr != NULL) {
+		file << ptr->getUserName() << "/" <<ptr->getPassword() <<"/"
+			<< ptr->getHighScore() << "\n";
+		ptr = ptr->next();
+	}
+
+	file.close();
 	return true;
 }
 
@@ -120,10 +149,10 @@ User * AccountManager::search(string user) {
 
 	return ptr;
 }
-
+/*
 void AccountManager::saveGame(Board * game) {
 	loggedIn->saveGame(game);
-}
+}*/
 
 string AccountManager::getName() {
 	return (loggedIn != NULL) ? loggedIn->getUserName() : "";
