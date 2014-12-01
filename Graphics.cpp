@@ -103,22 +103,24 @@ void Graphics::DrawRect(float x, float y, float width, float height, float r, fl
 {
 	brush->SetColor(D2D1::ColorF(r, g, b, a));//sets color here
 	D2D1_RECT_F rect = D2D1::RectF(x,y,width+x,height+y);
-	if (!fill) renderTarget->DrawRectangle(rect, brush, 5, NULL); //Creates an ellipse inside of the draw ellipse function.
+	if (!fill) renderTarget->DrawRectangle(rect, brush, 4, NULL); //Creates an ellipse inside of the draw ellipse function.
 	else renderTarget->FillRectangle(rect, brush);
 }
 
-void Graphics::DrawUI()
+void Graphics::DrawUI(int arr[9][9])
 {
 	//draw background first
 	float borderSize = 5;
-	DrawRect(90.0f - borderSize, 100.0f - borderSize, 600.0f + 2 * borderSize, 600.0f + 2 * borderSize, 0.0f, 0.0f, 0.0f, 1.0f, true);	//draws black border to game board
-	DrawRect(90.0f, 100.0f, 600.0f, 600.0f, 255.0f / 256, 196.0f / 256, 153.0f / 256, 1.0f, true);			//draws brown game board
+	DrawRect(90.0f - borderSize, 100.0f - borderSize, 600.0f -7+ 2 * borderSize, 600.0f -7+ 2 * borderSize, 0.0f, 0.0f, 0.0f, 1.0f, true);	//draws black border to game board
+	DrawRect(90.0f, 100.0f, 600.0f-7, 600.0f-7, 255.0f / 256, 196.0f / 256, 153.0f / 256, 1.0f, true);			//draws brown game board
+
 
 	//draw grid next
 	brush->SetColor(D2D1::ColorF(0.0f, 0.0f, 0.0f, 1.0f));
-	float width = 600, height = 600, x0 = 90, y0 = 100;
+	float width = 600-2, height = 600-2, x0 = 90, y0 = 100;
 	float xspacing = width / 9, yspacing = height/9;
 	int checkForBold = 0, strokeWidth = 2;
+
 
 	for (int x = x0+xspacing; x < 8*xspacing+x0; x+=xspacing)
 	{
@@ -132,16 +134,15 @@ void Graphics::DrawUI()
 		renderTarget->DrawLine(	D2D1::Point2F(x0, static_cast<FLOAT>(y)),D2D1::Point2F(x0 + width, static_cast<FLOAT>(y)),brush,strokeWidth);
 	}
 
-	//draw numbers in grid
-
-	//use getBoard in real game
-	int arr[9][9] = {{4,3,6,8,2,9,7,1,5},{5,1,7,3,4,6,9,8,2},{2,8,9,1,5,7,6,3,4},{3,6,4,5,9,2,8,7,1},{9,7,2,6,8,1,5,4,3},{1,5,8,4,7,3,2,9,6},{8,2,3,7,1,5,4,6,9},{7,9,1,2,6,4,3,5,8},{6,4,5,9,3,8,1,2,7}}; //where the numbers are
 	string temp2;
 	for(int x=0; x<9; x++)
 	{
 		for(int y=0; y<9; y++)
 		{
-			temp2 = static_cast<ostringstream*>( &(ostringstream() << arr[x][y]) )->str();
+			if(arr[x][y]>0 && arr[x][y]<10)
+				temp2 = static_cast<ostringstream*>( &(ostringstream() << arr[x][y]) )->str();
+			else
+				temp2 = " ";
 			DrawString(temp2,x0+x*xspacing+25,y0+y*yspacing+25,10,10 );
 		}
 
@@ -158,6 +159,29 @@ void Graphics::DrawUI()
 		DrawRect(5-2,760-2,60+4,30+4,0/256.0f, 0/256.0f,0 /256.0f,1.0f,true);
 		DrawRect(5,760,60,30,204/256.0f, 102/256.0f,0 /256.0f,1.0f,true);
 		DrawSmallerString("Scores",6,760,60,30);
+
+		//draw guess and select boards
+		int x_distance_from_board = 25, x0_select = x0+width+x_distance_from_board, x0_guess=5;
+		//draw boarder first
+		DrawRect(x0_guess-borderSize/2.0,y0-borderSize/2.0,60+2*borderSize/2.0,height+2*borderSize/2.0,0.0f,0.0f,0.0f,1.0f,true);
+		DrawRect(x0_select-borderSize/2.0,y0-borderSize/2.0,60+2*borderSize/2.0,height+2*borderSize/2.0,0.0f,0.0f,0.0f,1.0f,true);
+		//draw foreground next
+		DrawRect(x0_guess,y0,60,height, 255.0f / 256, 196.0f / 256, 153.0f / 256, 1.0f,true);
+		DrawRect(x0_select,y0,60,height, 255.0f / 256, 196.0f / 256, 153.0f / 256, 1.0f,true);
+		//draw labels over guess and select boards
+		DrawSmallerString("Maybe",x0_guess-borderSize/2.0,y0-40,70,50);
+		DrawSmallerString("Maybe Not",x0_select-borderSize/2.0-2,y0-50,70,50);
+		//draw dividers and numbers
+		for(int i=1; i<9; i++){
+				DrawRect(x0_select,y0+height/9*i,60,borderSize/2.0f,0.0f,0.0f,0.0f,1.0f,true);
+				DrawRect(x0_guess,y0+height/9*i,60,borderSize/2.0f,0.0f,0.0f,0.0f,1.0f,true);
+				DrawString(to_string(i),x0_select,y0+height/9*(i-1)+5,60,60);
+				DrawString(to_string(i),x0_guess,y0+height/9*(i-1)+5,60,60);
+		}
+		DrawString(to_string(9),x0_select,y0+height/9*(9-1)+5,60,60);
+		DrawString(to_string(9),x0_guess,y0+height/9*(9-1)+5,60,60);
+		
+		
 	}
 }
 
@@ -176,3 +200,27 @@ void Graphics::DrawSmallerString(string str, float x, float y, float width, floa
 	brush->SetColor(D2D1::ColorF(0.0f, 0.0f, 0.0f, 1.0f));
 	renderTarget->DrawTextA(widecstr, str.length() , smalltextformat, D2D1::RectF(x, y, x + width, y + height), brush);
 }
+
+void Graphics::DrawSelection(int x_block, int y_block, string color)
+{
+	int xPos=90+600/9*x_block+2, yPos=100+600/9*y_block+2;
+	int length=600/9-4;
+	if(color == "green"){
+		DrawRect(xPos,yPos,length,length,0.0f,1.0f,0.0f,1.0f,false);
+	}else if(color == "red"){
+		DrawRect(xPos,yPos,length,length,1.0f,0.0f,0.0f,1.0f,false);
+	}else{
+		DrawRect(xPos,yPos,length,length,0.0f,0.0f,1.0f,1.0f,false);
+	}
+}
+
+bool Graphics::DrawGuessSelected(bool* trues, bool* falses){
+	bool something_was_drawn=false;
+		for(int i=0; i<9; i++){ //draw selected guesses
+			if(trues[i])
+				DrawRect(6,100+600/9.0*i,60-2,600/9,0.0f,1.0f,0.0f,1.0f,false);
+			if(falses[i])
+				DrawRect(714,100+600/9.0*i,60-2,600/9,1.0f,0.0f,0.0f,1.0f,false);
+		}
+	return something_was_drawn;
+	}
